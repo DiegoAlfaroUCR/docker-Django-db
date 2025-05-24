@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Task Manager</h1>
+
+<ul>
+    {% for task in tasks %}
+    <li>
+        <strong>{{ task.title }}</strong>
+        {% if task.is_completed %}
+            ✅ Completed
+        {% else %}
+            ❌ Not Completed
+        {% endif %}
+        <br>
+        {{ task.description }} <br>
+        Created at: {{ task.created_at }}
+    </li>
+    <hr>
+    {% empty %}
+    <li>No tasks available.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
