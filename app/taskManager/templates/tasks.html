@@ -1,6 +1,16 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Task Manager</h1>
 
+<h2>Add New Task</h2>
+<form method="post">
+    {% csrf_token %} {# Django's security token for forms #}
+    {{ form.as_p }} {# Renders the form fields as paragraphs #}
+    <button type="submit">Add Task</button>
+</form>
+
+<h2>Existing Tasks</h2>
 <ul>
     {% for task in tasks %}
     <li>
