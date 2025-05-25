@@ -51,6 +51,13 @@ services:
     env_file:
       - .env
 
+    # Healthcheck, pone condición "healthy" si el contenedor de django-web está listo
+    healthcheck:
+      test: ["CMD", "python", "manage.py", "check_db_connection"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
 networks:
   app_network:
     driver: bridge  # Tipo de red (bridge es la más común para desarrollo)
