@@ -1,6 +1,8 @@
 services:
   db:
     image: postgres:17
+    networks:
+    - app_network
     environment:
       # Se usan las variables definidas en .env
       POSTGRES_DB: ${DATABASE_NAME}
@@ -24,6 +26,8 @@ services:
 
   django-web:
     build: .      # Usar imagen del Dockerfile
+    networks:  # ← Conecta este servicio a la red
+      - app_network
     container_name: django-docker
     volumes:      # Mapea los cambios hechos en el código al contenedor
       - .:/app
@@ -46,6 +50,10 @@ services:
       DATABASE_PORT: ${DATABASE_PORT}
     env_file:
       - .env
+
+networks:
+  app_network:
+    driver: bridge  # Tipo de red (bridge es la más común para desarrollo)
 
 volumes:
   postgres_data:
