@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:17
     environment:
+      # Se usan las variables definidas en .env
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -12,16 +13,26 @@ services:
     env_file:
       - .env
 
+    # Healthcheck, pone condición "healthy" si base de datos está lista
+    # Se repite varias veces hasta que se encuentre lista.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USERNAME} -d ${DATABASE_NAME} -h localhost -p 5432"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   django-web:
-    build: .
+    build: .      # Usar imagen del Dockerfile
     container_name: django-docker
-    volumes:
-      - .:/app   # <-- map your ./app to container's /app
+    volumes:      # Mapea los cambios hechos en el código al contenedor
+      - .:/app
     working_dir: /app
     ports:
       - "8000:8000"
-    depends_on:
-      - db
+    depends_on:   # Espera a crear el contenedor del db antes de hacer el de django.
+      db:
+        condition: service_healthy
     environment:
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: ${DEBUG}
