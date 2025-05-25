@@ -128,7 +128,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+#.env   Se ocupa para el proyecto, se quita
 .venv
 env/
 venv/
