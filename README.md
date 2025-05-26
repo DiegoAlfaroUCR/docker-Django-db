@@ -176,7 +176,7 @@ Define cómo se construye la imagen personalizada para el contenedor Django.
 
 ### `docker-compose.yml`
 
-Orquesta los servicios del sistema: Django y PostgreSQL.
+Orquesta los servicios del sistema: Django y PostgreSQL. Modificado/adaptado de guía oficial para [adaptar un projecto Django con Docker](https://www.docker.com/blog/how-to-dockerize-django-app/).
 
 **Funciones principales:**
 - Define los contenedores y sus relaciones.
@@ -188,7 +188,8 @@ Orquesta los servicios del sistema: Django y PostgreSQL.
 
 ### `.env`
 
-Archivo que contiene variables de entorno sensibles.
+Archivo que contiene variables de entorno sensibles. Modificado/adaptado de guía oficial para [adaptar un projecto Django con Docker](https://www.docker.com/blog/how-to-dockerize-django-app/).
+
 
 **Variables comunes:**
 
@@ -222,7 +223,7 @@ Script opcional ejecutado al iniciar el contenedor Django.
 - Esperar que PostgreSQL esté disponible.
 - Ejecutar migraciones automáticamente.
 - Crear superusuario.
-- Recolectar archivos estáticos.
+- Ejecutar el CMD establecido en el Dockerfile.
 
 ---
 
@@ -387,7 +388,7 @@ Al hacer clic sobre el botón correspondiente, se actualiza el estado de la tare
 
 ### 📝 Código Base de Plantilla HTML
 
-La interfaz fue desarrollada utilizando el sistema de plantillas de Django. El archivo `base.html` define la estructura principal del sitio, incluyendo una barra de navegación y un contenedor donde se inserta dinámicamente el contenido de cada página utilizando bloques `{% block %}`. Esto permite una presentación coherente y reutilizable en todas las vistas de la aplicación.
+La interfaz fue desarrollada utilizando el sistema de plantillas de Django. El archivo `base.html` (tomado y corregido de una [guía de Django](https://www.youtube.com/watch?v=nGIg40xs9e4):) define la estructura principal del sitio, incluyendo una barra de navegación y un contenedor donde se inserta dinámicamente el contenido de cada página utilizando bloques `{% block %}`. Esto permite una presentación coherente y reutilizable en todas las vistas de la aplicación.
 
 ---
 
