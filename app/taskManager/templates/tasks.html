@@ -5,8 +5,8 @@
 
 <h2>Add New Task</h2>
 <form method="post">
-    {% csrf_token %} {# Django's security token for forms #}
-    {{ form.as_p }} {# Renders the form fields as paragraphs #}
+    {% csrf_token %}
+    {{ form.as_p }}
     <button type="submit">Add Task</button>
 </form>
 
@@ -15,11 +15,17 @@
     {% for task in tasks %}
     <li>
         <strong>{{ task.title }}</strong>
-        {% if task.is_completed %}
-            ✅ Completed
-        {% else %}
-            ❌ Not Completed
-        {% endif %}
+        <form method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <button type="submit" name="toggle_task" class="toggle-btn">
+                {% if task.is_completed %}
+                    ✅ Completed (Click to undo)
+                {% else %}
+                    ❌ Not Completed (Click to complete)
+                {% endif %}
+            </button>
+        </form>
         <br>
         {{ task.description }} <br>
         Created at: {{ task.created_at }}
@@ -29,5 +35,4 @@
     <li>No tasks available.</li>
     {% endfor %}
 </ul>
-
 {% endblock %}
