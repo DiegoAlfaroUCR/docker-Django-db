@@ -316,12 +316,12 @@ graph TD
    - Aplicará healthchecks y dependencias definidas en `docker-compose.yml`.
 
 ---
-🌍 Verificar Aplicación  
-Navegar a: http://localhost:8000
+3. **🌍 Verificar Aplicación**  
+- Navegar a: http://localhost:8000
 
-Admin de Django: http://localhost:8000/admin
+- Admin de Django: http://localhost:8000/admin
 
-🧹 Detener y Limpiar el Entorno  
+4. **🧹 Detener y Limpiar el Entorno** 
 Para detener la aplicación:
 
 ```bash
@@ -333,7 +333,7 @@ Para eliminar los volúmenes persistentes (como la base de datos):
 ```bash
 docker compose down -v
 ```
-## 📸 Aplicación Web en Funcionamineto
+## 📸 Aplicación Web en Funcionamiento
 
 A continuación se muestran capturas de pantalla de la interfaz de la aplicación Django, funcionando correctamente mediante contenedores Docker.
 
@@ -347,37 +347,50 @@ La interfaz principal muestra:
 
 #### 🔽 Estructura HTML renderizada:
 
-![Pantalla principal de la aplicación  - Agregar y listar tareas](app/img/pantalla_principal.png)
+![Pantalla principal de la aplicación - Agregar y listar tareas](app/img/pantalla_principal.png)
+
 ---
 
 ### ✅ Funcionalidades Visibles
 
-- **Bootstrap 4** para estilo visual moderno.
-- Navbar con enlaces (Home, About, Contact).
-- Formularios protegidos con `csrf_token`.
-- Renderizado dinámico con bloques de plantilla `{% block %}` de Django.
-- Botones para interactuar directamente con las tareas sin recargar la página completa.
+- 🎨 **Bootstrap 4** para un estilo visual moderno y responsive.
+- 🧭 Navbar con enlaces (Home, About, Contact).
+- 🛡️ Formularios protegidos con `csrf_token`.
+- 🧱 Renderizado dinámico mediante bloques de plantilla `{% block %}` de Django.
+- 🔁 Botones interactivos para cambiar el estado de cada tarea sin necesidad de recargar la página completa.
 
-#### Agregar una nueva tarea
+---
+
+### 🆕 Agregar una Nueva Tarea
+
+Formulario donde el usuario puede ingresar el nombre y la descripción de una tarea nueva:
 
 ![Agregar una nueva tarea](app/img/agregar_tarea.png)
----
-#### Maracar una tarea como completada:
 
-![Marcar una tarea como completada](app/img/marcar_tarea.png)   
 ---
 
-### 📝 Código de la Plantilla
+### 📋 Visualización de Varias Tareas
 
-El diseño está basado en las siguientes plantillas Django:
+Vista donde ya se han agregado múltiples tareas a la lista:
 
-#### 🔹 `base.html`
+![Visualización de tareas](app/img/varias_tareas.png)
 
-```html
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">My Django App</a>
-  ...
-</nav>
-<div class="container">
-  {% block content %}{% endblock %}
-</div>
+---
+
+### ✅ Marcar una Tarea como Completada
+
+Al hacer clic sobre el botón correspondiente, se actualiza el estado de la tarea y se muestra como completada:
+
+![Marcar una tarea como completada](app/img/marcar_tarea.png)
+
+---
+
+### 📝 Código Base de Plantilla HTML
+
+La interfaz fue desarrollada utilizando el sistema de plantillas de Django. El archivo `base.html` define la estructura principal del sitio, incluyendo una barra de navegación y un contenedor donde se inserta dinámicamente el contenido de cada página utilizando bloques `{% block %}`. Esto permite una presentación coherente y reutilizable en todas las vistas de la aplicación.
+
+---
+
+### ✅ Conclusión
+
+Estas capturas y funcionalidades demuestran que la aplicación está correctamente desplegada y funcionando dentro de un entorno Docker. Se logra una experiencia fluida para el usuario, permitiéndole gestionar tareas de manera intuitiva a través de una interfaz limpia y moderna. Además, el uso de contenedores facilita la instalación, el mantenimiento y la portabilidad del proyecto, validando el enfoque adoptado para un desarrollo web robusto y escalable.
