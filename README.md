@@ -2,6 +2,7 @@
 **Escuela de Ingeniería Eléctrica**  
 **IE-0417 – Diseño de Software para Ingeniería**  
 **Laboratorio 5: Despliegue de una aplicación Django con Docker**  
+**Integrantes: Diego Alfaro (C20259), Edgar Alvarado (C10351)** 
 
 ---
 
