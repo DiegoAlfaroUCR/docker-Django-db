@@ -38,27 +38,40 @@ graph TD
 
 ```yaml
 services:
-  django-web:
-    build: .
-    ports:
-      - "8000:8000"
-    networks:
-      - app_network
-    depends_on:
-      - db
-    env_file:
-      - .env
-
   db:
     image: postgres:17
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
-      - app_network
+    - app_network
     environment:
+      # Se usan las variables definidas en .env
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ·
+    ·
+    ·  
+
+  django-web:
+    build: .
+    networks:
+      - app_network
+    container_name: django-docker
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ·
+    ·
+    ·
 
 networks:
   app_network:
@@ -194,10 +207,11 @@ Archivo que contiene variables de entorno sensibles. Modificado/adaptado de guí
 **Variables comunes:**
 
 ```dotenv
-DATABASE_NAME=appdb
+SECRET_KEY=LLAVE_SECRETA
+DATABASE_ENGINE=postgresql_psycopg2
+DATABASE_NAME=dockerdjango
 DATABASE_USERNAME=dbuser
-DATABASE_PASSWORD=dbpass
-SECRET_KEY=tu_clave_secreta
+DATABASE_PASSWORD=dbpassword
 ```
 
 ---
@@ -206,7 +220,6 @@ SECRET_KEY=tu_clave_secreta
 
 Lista de dependencias de Python necesarias para la app Django.
 
-**Ejemplo:**
 
 ```ini
 Django==4.2.1
@@ -217,12 +230,11 @@ psycopg2-binary==2.9.6
 
 ### `docker-entrypoint.sh`
 
-Script opcional ejecutado al iniciar el contenedor Django.
+Script ejecutado al iniciar el contenedor Django.
 
-**Tareas típicas:**
+**Tareas:**
 - Esperar que PostgreSQL esté disponible.
 - Ejecutar migraciones automáticamente.
-- Crear superusuario.
 - Ejecutar el CMD establecido en el Dockerfile.
 
 ---
@@ -388,7 +400,7 @@ Al hacer clic sobre el botón correspondiente, se actualiza el estado de la tare
 
 ### 📝 Código Base de Plantilla HTML
 
-La interfaz fue desarrollada utilizando el sistema de plantillas de Django. El archivo `base.html` (tomado y corregido de una [guía de Django](https://www.youtube.com/watch?v=nGIg40xs9e4):) define la estructura principal del sitio, incluyendo una barra de navegación y un contenedor donde se inserta dinámicamente el contenido de cada página utilizando bloques `{% block %}`. Esto permite una presentación coherente y reutilizable en todas las vistas de la aplicación.
+La interfaz fue desarrollada utilizando el sistema de plantillas de Django. El archivo `base.html` (tomado y corregido de una [guía de Django](https://www.youtube.com/watch?v=nGIg40xs9e4)) define la estructura principal del sitio, incluyendo una barra de navegación y un contenedor donde se inserta dinámicamente el contenido de cada página utilizando bloques `{% block %}`. Esto permite una presentación coherente y reutilizable en todas las vistas de la aplicación.
 
 ---
 
